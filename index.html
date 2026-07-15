@@ -274,6 +274,25 @@
     background: rgba(248, 113, 113, 0.25);
   }
 
+  .delete-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: rgba(148, 163, 184, 0.1);
+    color: var(--text-secondary);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .delete-btn:active {
+    background: rgba(148, 163, 184, 0.25);
+  }
+
   .empty-state {
     text-align: center;
     color: var(--text-secondary);
@@ -532,10 +551,21 @@
         updateTeammate(t.id, { steps: 0 });
       });
 
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.textContent = '🗑';
+      deleteBtn.setAttribute('aria-label', 'Remove teammate');
+      deleteBtn.addEventListener('click', () => {
+        if (confirm(`Remove ${t.name || 'this teammate'} from the team?`)) {
+          deleteTeammate(t.id);
+        }
+      });
+
       row.appendChild(avatar);
       row.appendChild(main);
       row.appendChild(stepsInput);
       row.appendChild(clearBtn);
+      row.appendChild(deleteBtn);
       teammateListEl.appendChild(row);
     });
   }
@@ -597,6 +627,23 @@
     if (error) {
       console.error(error);
       showToast('Could not save change.', true);
+      loadTeammates();
+    }
+  }
+
+  async function deleteTeammate(id) {
+    // Optimistic local removal
+    teammates = teammates.filter(t => t.id !== id);
+    render();
+
+    const { error } = await supabaseClient
+      .from('teammates')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error(error);
+      showToast('Could not remove teammate.', true);
       loadTeammates();
     }
   }
