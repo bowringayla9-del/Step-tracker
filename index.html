@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Team Lunge Tracker</title>
+<title>Team Stairs Tracker</title>
 <style>
   :root {
     --bg-deep: #0f172a;
@@ -366,7 +366,7 @@
 
 <div class="wrap">
   <header>
-    <h1>🦵 Team Lunge Tracker</h1>
+    <h1>🪜 Team Stairs Tracker</h1>
     <p>Live progress toward the team goal</p>
     <div class="status-pill">
       <span class="dot" id="statusDot"></span>
@@ -386,7 +386,7 @@
     </div>
 
     <div class="card" id="remainingCardWrap">
-      <div class="card-label" id="remainingLabel">Lunges Remaining</div>
+      <div class="card-label" id="remainingLabel">Stairs Remaining</div>
       <div class="card-value" id="remainingValue">300,000</div>
     </div>
   </div>
@@ -416,10 +416,10 @@
   // SUPABASE CONFIG — fill in your anon public key below
   // ---------------------------------------------------------------
   const SUPABASE_URL = 'https://zhukywlioftxployvsyk.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpodWt5d2xpb2Z0eHBsb3l2c3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4NDExNTAsImV4cCI6MjA5OTQxNzE1MH0.OJsfk7ZivxYY2pPO1kE6FBq3WTF39WRz2K7CT5Wlogg';
+  const SUPABASE_KEY = 'YOUR_ANON_PUBLIC_KEY';
   // ---------------------------------------------------------------
 
-  const TEAM_GOAL = 1000;
+  const TEAM_GOAL = 300;
 
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -479,7 +479,7 @@
       remainingValueEl.textContent = 'Goal Achieved! 🎉';
     } else {
       remainingCardWrap.className = 'card';
-      remainingLabel.textContent = 'Lunges Remaining';
+      remainingLabel.textContent = 'Stairs Remaining';
       remainingValueEl.textContent = formatNum(remaining);
       remainingValueEl.className = 'card-value';
     }
