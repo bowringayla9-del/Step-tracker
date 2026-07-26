@@ -6,14 +6,14 @@
 <title>Team Bike Tracker</title>
 <style>
   :root {
-    --bg-deep: #0f172a;
-    --bg-card: #1e293b;
-    --bg-card-hover: #24334a;
-    --accent-blue: #38bdf8;
-    --accent-green: #4ade80;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border-subtle: rgba(148, 163, 184, 0.15);
+    --bg-deep: #000000;
+    --bg-card: #141414;
+    --bg-card-hover: #1c1c1c;
+    --accent-blue: #5ec8f2;
+    --accent-green: #5ec8f2;
+    --text-primary: #ffffff;
+    --text-secondary: #9a9a9a;
+    --border-subtle: rgba(255, 255, 255, 0.14);
   }
 
   * {
@@ -26,10 +26,10 @@
     padding: 0;
     background: var(--bg-deep);
     background-image:
-      radial-gradient(circle at 15% 0%, rgba(56, 189, 248, 0.12), transparent 40%),
-      radial-gradient(circle at 85% 15%, rgba(74, 222, 128, 0.08), transparent 45%);
+      radial-gradient(circle at 15% 0%, rgba(215, 249, 0, 0.10), transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(215, 249, 0, 0.06), transparent 45%);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Arial Narrow", "Helvetica Neue Condensed", Impact, -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
   }
@@ -38,6 +38,8 @@
     max-width: 640px;
     margin: 0 auto;
     padding: 24px 16px 100px;
+    position: relative;
+    z-index: 1;
   }
 
   header {
@@ -46,20 +48,21 @@
   }
 
   header h1 {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     margin: 0 0 4px;
-    background: linear-gradient(90deg, var(--accent-blue), #7dd3fc);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent-blue);
   }
 
   header p {
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 12px;
     margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
   }
 
   .status-pill {
@@ -70,9 +73,12 @@
     color: var(--text-secondary);
     margin-top: 10px;
     padding: 4px 10px;
-    border-radius: 999px;
-    background: rgba(148, 163, 184, 0.08);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
   }
 
   .dot {
@@ -92,25 +98,25 @@
   }
 
   .card {
-    background: linear-gradient(160deg, var(--bg-card), #182236);
+    background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 18px;
+    border-radius: 4px;
     padding: 18px;
   }
 
   .card-label {
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.14em;
     color: var(--text-secondary);
-    font-weight: 600;
+    font-weight: 800;
     margin-bottom: 6px;
   }
 
   .card-value {
     font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-weight: 900;
+    letter-spacing: -0.01em;
     font-variant-numeric: tabular-nums;
   }
 
@@ -120,8 +126,8 @@
   .target-card {
     grid-column: 1 / -1;
     text-align: center;
-    background: linear-gradient(160deg, #1a2740, #131f34);
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: var(--bg-card);
+    border: 2px solid var(--accent-blue);
   }
   .target-card .card-value {
     font-size: 30px;
@@ -129,8 +135,8 @@
   }
 
   .remaining-card.achieved {
-    background: linear-gradient(160deg, rgba(74, 222, 128, 0.18), rgba(74, 222, 128, 0.05));
-    border: 1px solid rgba(74, 222, 128, 0.4);
+    background: rgba(215, 249, 0, 0.1);
+    border: 2px solid var(--accent-green);
     grid-column: 1 / -1;
     text-align: center;
     animation: pulse-glow 1.8s ease-in-out infinite;
@@ -138,11 +144,12 @@
   .remaining-card.achieved .card-value {
     color: var(--accent-green);
     font-size: 22px;
+    text-transform: uppercase;
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 0 rgba(74, 222, 128, 0); }
-    50% { box-shadow: 0 0 24px rgba(74, 222, 128, 0.35); }
+    0%, 100% { box-shadow: 0 0 0 rgba(215, 249, 0, 0); }
+    50% { box-shadow: 0 0 24px rgba(215, 249, 0, 0.4); }
   }
 
   .progress-wrap {
@@ -152,19 +159,19 @@
   .progress-track {
     width: 100%;
     height: 14px;
-    border-radius: 999px;
-    background: rgba(148, 163, 184, 0.12);
+    border-radius: 3px;
+    background: #1c1c1c;
     overflow: hidden;
     border: 1px solid var(--border-subtle);
   }
 
   .progress-fill {
     height: 100%;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+    border-radius: 0;
+    background: var(--accent-blue);
     width: 0%;
     transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 12px rgba(215, 249, 0, 0.5);
   }
 
   .progress-pct {
@@ -172,15 +179,17 @@
     font-size: 13px;
     color: var(--text-secondary);
     margin-top: 8px;
-    font-weight: 600;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   .section-title {
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-secondary);
-    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--accent-blue);
+    font-weight: 900;
     margin: 28px 0 12px;
   }
 
@@ -196,7 +205,7 @@
     gap: 10px;
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 16px;
+    border-radius: 4px;
     padding: 12px 14px;
     transition: background 0.2s;
   }
@@ -205,14 +214,15 @@
     width: 38px;
     height: 38px;
     min-width: 38px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-blue), #0ea5e9);
+    border-radius: 4px;
+    background: var(--accent-blue);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-size: 15px;
-    color: #04121f;
+    font-weight: 900;
+    font-size: 14px;
+    color: #000000;
+    text-transform: uppercase;
   }
 
   .row-main {
@@ -222,7 +232,7 @@
 
   .name-field {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-primary);
     background: transparent;
     border: none;
@@ -239,19 +249,19 @@
   .steps-field {
     font-size: 13px;
     color: var(--accent-blue);
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    border-radius: 8px;
+    background: rgba(215, 249, 0, 0.08);
+    border: 1px solid rgba(215, 249, 0, 0.25);
+    border-radius: 3px;
     padding: 6px 8px;
     width: 100px;
     outline: none;
     font-family: inherit;
-    font-weight: 700;
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
   }
   .steps-field:focus {
     border-color: var(--accent-blue);
-    background: rgba(56, 189, 248, 0.14);
+    background: rgba(215, 249, 0, 0.16);
   }
 
   .clear-btn {
@@ -299,7 +309,9 @@
     font-size: 13px;
     padding: 30px 10px;
     border: 1px dashed var(--border-subtle);
-    border-radius: 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   .add-btn-wrap {
@@ -316,16 +328,17 @@
   .add-btn {
     max-width: 608px;
     width: 100%;
-    background: linear-gradient(90deg, var(--accent-blue), #0ea5e9);
-    color: #04121f;
+    background: var(--accent-blue);
+    color: #000000;
     border: none;
-    border-radius: 16px;
+    border-radius: 4px;
     padding: 15px;
     font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 0.01em;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 8px 24px rgba(215, 249, 0, 0.3);
   }
   .add-btn:active {
     transform: scale(0.98);
@@ -339,7 +352,7 @@
     top: 16px;
     left: 50%;
     transform: translateX(-50%) translateY(-20px);
-    background: #1e293b;
+    background: #2a2019;
     border: 1px solid var(--border-subtle);
     color: var(--text-primary);
     padding: 10px 18px;
@@ -360,9 +373,30 @@
     border-color: rgba(248, 113, 113, 0.4);
     color: #f87171;
   }
+
+  .week-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1.6);
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: 17vh;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: var(--accent-blue);
+    opacity: 0.22;
+    text-shadow: 0 0 40px rgba(94, 200, 242, 0.6);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+    line-height: 1;
+  }
 </style>
 </head>
 <body>
+<div class="week-watermark" aria-hidden="true">WEEK 8</div>
 
 <div class="wrap">
   <header>
@@ -695,3 +729,6 @@
 </script>
 </body>
 </html>
+
+
+    
