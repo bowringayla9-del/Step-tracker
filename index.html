@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>Team Stairs Tracker</title>
+<title>Team Bike Tracker</title>
 <style>
   :root {
     --bg-deep: #0f172a;
@@ -366,7 +366,7 @@
 
 <div class="wrap">
   <header>
-    <h1>🪜 Team Stairs Tracker</h1>
+    <h1>🚴 Team Bike Tracker</h1>
     <p>Live progress toward the team goal</p>
     <div class="status-pill">
       <span class="dot" id="statusDot"></span>
@@ -377,7 +377,7 @@
   <div class="stats-grid">
     <div class="card target-card">
       <div class="card-label">Team Goal</div>
-      <div class="card-value" id="targetValue">300,000</div>
+      <div class="card-value" id="targetValue">100</div>
     </div>
 
     <div class="card">
@@ -386,7 +386,7 @@
     </div>
 
     <div class="card" id="remainingCardWrap">
-      <div class="card-label" id="remainingLabel">Stairs Remaining</div>
+      <div class="card-label" id="remainingLabel">KM Remaining</div>
       <div class="card-value" id="remainingValue">300,000</div>
     </div>
   </div>
@@ -416,10 +416,10 @@
   // SUPABASE CONFIG — fill in your anon public key below
   // ---------------------------------------------------------------
   const SUPABASE_URL = 'https://zhukywlioftxployvsyk.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpodWt5d2xpb2Z0eHBsb3l2c3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4NDExNTAsImV4cCI6MjA5OTQxNzE1MH0.OJsfk7ZivxYY2pPO1kE6FBq3WTF39WRz2K7CT5Wlogg';
+  const SUPABASE_KEY = 'YOUR_ANON_PUBLIC_KEY';
   // ---------------------------------------------------------------
 
-  const TEAM_GOAL = 300;
+  const TEAM_GOAL = 100;
 
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -436,12 +436,12 @@
   const statusText = document.getElementById('statusText');
   const toastEl = document.getElementById('toast');
 
-  document.getElementById('targetValue').textContent = TEAM_GOAL.toLocaleString();
+  document.getElementById('targetValue').textContent = TEAM_GOAL.toLocaleString() + ' km';
 
   let teammates = [];
 
   function formatNum(n) {
-    return Number(n || 0).toLocaleString();
+    return Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   }
 
   function showToast(message, isError) {
@@ -469,7 +469,7 @@
     const remaining = TEAM_GOAL - total;
     const pct = Math.min(100, Math.max(0, (total / TEAM_GOAL) * 100));
 
-    totalValueEl.textContent = formatNum(total);
+    totalValueEl.textContent = formatNum(total) + ' km';
     progressFillEl.style.width = pct + '%';
     progressPctEl.textContent = pct.toFixed(1) + '% complete';
 
@@ -479,8 +479,8 @@
       remainingValueEl.textContent = 'Goal Achieved! 🎉';
     } else {
       remainingCardWrap.className = 'card';
-      remainingLabel.textContent = 'Stairs Remaining';
-      remainingValueEl.textContent = formatNum(remaining);
+      remainingLabel.textContent = 'KM Remaining';
+      remainingValueEl.textContent = formatNum(remaining) + ' km';
       remainingValueEl.className = 'card-value';
     }
   }
@@ -527,13 +527,14 @@
       const stepsInput = document.createElement('input');
       stepsInput.className = 'steps-field';
       stepsInput.type = 'number';
-      stepsInput.setAttribute('inputmode', 'numeric');
-      stepsInput.setAttribute('pattern', '[0-9]*');
+      stepsInput.setAttribute('inputmode', 'decimal');
+      stepsInput.setAttribute('step', '0.1');
       stepsInput.value = t.steps || 0;
       stepsInput.min = '0';
       stepsInput.addEventListener('blur', () => {
-        let val = parseInt(stepsInput.value, 10);
+        let val = parseFloat(stepsInput.value);
         if (isNaN(val) || val < 0) val = 0;
+        val = Math.round(val * 10) / 10;
         stepsInput.value = val;
         if (val !== t.steps) {
           updateTeammate(t.id, { steps: val });
